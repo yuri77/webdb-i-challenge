@@ -32,7 +32,7 @@ WHERE CustomerID=92;
 
 SELECT DISTINCT City FROM [Customers]
 
-SELECT DISTINCT Count(City) FROM [Customers]
+SELECT Count(DISTINCT City) From Customers
 
 ## (Stretch) Find all suppliers who have names longer than 20 characters. You can use `length(SupplierName)` to get the length of the name
 
