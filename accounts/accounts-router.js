@@ -31,4 +31,30 @@ router.get("/:id", (req, res) => {
     });
 });
 
+router.post("/", (req, res) => {
+  const { name, budget } = req.body;
+  if (!name || !budget) {
+    res.status(404).json({ error: "please provide all required fields" });
+  }
+
+  db("accounts")
+    .insert({ name, budget }, "id")
+    .then(([id]) => {
+      db("accounts")
+        .where({ id })
+        .first()
+        .then(account => {
+          res.status(200).json(account);
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(500).json({ error: "error finding the id" });
+        });
+    })
+    .catch(err => {
+      console.log("post err", err);
+      res.status(500).json({ err: "err posting data" });
+    });
+});
+
 module.exports = router;
