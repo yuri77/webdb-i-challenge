@@ -57,4 +57,18 @@ router.post("/", (req, res) => {
     });
 });
 
+router.put("/:id", (req, res) => {
+  const changes = req.body;
+
+  db("accounts")
+    .where("id", req.params.id)
+    .update(changes)
+    .then(count => {
+      res.status(200).json({ message: `updated ${count} record` });
+    })
+    .catch(err => {
+      res.status(500).json({ err: "cannot update entry" });
+    });
+});
+
 module.exports = router;
