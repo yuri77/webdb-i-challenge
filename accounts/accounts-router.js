@@ -11,6 +11,7 @@ const router = express.Router();
 router.get("/", (req, res) => {
   db("accounts")
     .select("*")
+    .orderBy("budget", "desc")
     .then(accounts => res.status(200).json(accounts))
     .catch(err => {
       console.log("get endpoint error", err),
