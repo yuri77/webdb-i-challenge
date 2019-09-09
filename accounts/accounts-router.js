@@ -18,4 +18,17 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+
+  db("accounts")
+    .where({ id })
+    .first()
+    .then(account => res.status(200).json(account))
+    .catch(err => {
+      console.log("get id error", err);
+      res.status(500).json({ error: "couldn't retrieve data from database" });
+    });
+});
+
 module.exports = router;
